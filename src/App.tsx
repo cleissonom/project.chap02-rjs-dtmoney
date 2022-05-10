@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import { Header } from "./components/Header";
 
 export function App() {
    return (
-      <h1 className='title'>
-         Hello World!
-      </h1>
+      <>
+         <Header />
+      </>
    );
 }
