@@ -27,6 +27,8 @@ export const GlobalStyle = createGlobalStyle`
       @media (max-width: 720px){
          font-size: 87.5%; // 14px
       }
+
+      overflow: hidden;
    }
 
    body {
@@ -55,5 +57,67 @@ export const GlobalStyle = createGlobalStyle`
    [disabled] {
       opacity: 0.6;
       cursor: not-allowed;
+   }
+
+   .react-modal-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+   
+   .react-modal-content {
+      width: 100%;
+      max-width: 576px;
+
+      outline: none;
+
+      background-color: var(--background);
+      padding: 3rem;
+      position: relative;
+      border-radius: 0.25rem;
+   }
+
+   button.close-modal-button {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      height: 3rem;
+      border: none;
+      background-color: transparent;
+
+      transition: all 200ms;
+
+      &:hover {
+         cursor: pointer;
+         filter: brightness(0.8);
+      }
+   }
+
+   button.submit-modal-button {
+      width: 100%;
+      height: 4rem;
+      margin-top: 1.5rem;
+      padding: 0 1.5rem;
+      color: white;
+      border-radius: 0.25rem;
+      border: 0;
+      font-size: 1rem;
+      background-color: var(--green);
+      font-weight: 600;
+
+      transition: all 200ms;
+
+      &:hover {
+         cursor: pointer;
+         filter: brightness(0.9);
+      }
    }
 `

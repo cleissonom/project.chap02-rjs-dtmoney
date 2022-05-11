@@ -25,6 +25,12 @@ export const Content = styled.div`
       padding: 0.75rem 2rem;
       border-radius: 0.25rem;  
 
+      &:focus {
+         outline: 2px solid var(--blue-light);
+         outline-offset: 2px;
+      }
+     
+
       transition: all 200ms;
 
       &:hover {
