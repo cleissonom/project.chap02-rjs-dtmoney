@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import Modal from 'react-modal';
 import closeSVG from '../../assets/close.svg';
-import { NewTransactionModalStyles } from './styles';
+import incomeSVG from '../../assets/incomes.svg';
+import outcomeSVG from '../../assets/outcomes.svg';
+import { NewTransactionModalStyles, RadioBoxStyle, TransactionTypeStyle } from './styles';
 
 Modal.setAppElement('#root')
 
@@ -10,6 +13,8 @@ interface NewTransactionModalProps {
 }
 
 export function NewTransactionModal ({isOpen, onRequestClose}:NewTransactionModalProps){
+   const [transictionType, setTransictionType] = useState('outcome')
+
    return (
       <Modal
       isOpen={isOpen}
@@ -27,8 +32,24 @@ export function NewTransactionModal ({isOpen, onRequestClose}:NewTransactionModa
 
          <input type="text" placeholder='Title' />
          <input type="number" placeholder='Value' name="value" id="value" />
-         {/* <input type="checkbox" name="income" id="income" />
-         <input type="checkbox" name="outcome" id="outcome" /> */}
+         <TransactionTypeStyle>
+            <RadioBoxStyle 
+               type="button"
+               onClick={() => setTransictionType('income')}
+               wasSelected={transictionType === 'income'}
+            >
+               <img src={incomeSVG} alt="Outcome icon" />
+               <span>Income</span> 
+            </RadioBoxStyle>
+            <RadioBoxStyle 
+               type="button"
+               onClick={() => setTransictionType('outcome')}
+               wasSelected={transictionType === 'outcome'}
+            >
+               <img src={outcomeSVG} alt="Outcome icon" />
+               <span>Outcome</span> 
+            </RadioBoxStyle>
+         </TransactionTypeStyle>
          <input type="text" placeholder='Category' name="category" id="category" />
          <button type='submit' className='submit-modal-button'>Create transaction</button>
 
