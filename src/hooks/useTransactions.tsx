@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
-import { api } from './services/api';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { api } from '../services/api';
 
 interface TransactionsType {
    id: number,
@@ -18,7 +18,7 @@ interface TransactionsProviderProps {
 
 interface TransactionsContextData {
    transactions: TransactionsType[],
-   createTransaction: (transaction: TransactionsInput) => void,
+   createTransaction: (transaction: TransactionsInput) => Promise<void>,
 }
 
 export const TransactionsContext = createContext<TransactionsContextData>({} as TransactionsContextData);
@@ -32,8 +32,14 @@ export function TransactionsProvider({children}:TransactionsProviderProps){
          .catch(error => console.error(error))
    }, [])
 
-   function createTransaction (transaction: TransactionsInput){
-     api.post('/transactions', transaction)
+   async function createTransaction (transactionInput: TransactionsInput){
+     const response = await api.post('/transactions', {
+        ...transactionInput,
+        createdAt: new Date().toISOString()
+     })
+     const { transaction } = response.data;
+
+     setTransactions([...transactions, transaction])
    }
 
    return (
@@ -41,4 +47,10 @@ export function TransactionsProvider({children}:TransactionsProviderProps){
          {children}
       </TransactionsContext.Provider>
    );
+}
+
+export function useTransactions(){
+   const context = useContext(TransactionsContext);
+
+   return context;
 }

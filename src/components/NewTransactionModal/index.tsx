@@ -1,9 +1,9 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
 import closeSVG from '../../assets/close.svg';
 import incomeSVG from '../../assets/incomes.svg';
 import outcomeSVG from '../../assets/outcomes.svg';
-import { TransactionsContext } from '../../TransactionsContext';
+import { useTransactions } from '../../hooks/useTransactions';
 import { NewTransactionModalStyles, RadioBoxStyle, TransactionTypeStyle } from './styles';
 
 Modal.setAppElement('#root')
@@ -14,21 +14,27 @@ interface NewTransactionModalProps {
 }
 
 export function NewTransactionModal ({isOpen, onRequestClose}:NewTransactionModalProps){
-   const { createTransaction } = useContext(TransactionsContext)
+   const { createTransaction } = useTransactions()
 
    const [title, setTitle] = useState('')
    const [value, setValue] = useState(0)
    const [category, setCategory] = useState('')
    const [transictionType, setTransictionType] = useState('outcome')
 
-   function handleCreateNewTransaction(e: FormEvent){
+   async function handleCreateNewTransaction(e: FormEvent){
       e.preventDefault()
-      createTransaction({
+
+      await createTransaction({
          title,
          value,
          type: transictionType,
          category,
       })
+
+      setTitle('')
+      setValue(0)
+      setCategory('')
+      onRequestClose()
    }
 
    return (
