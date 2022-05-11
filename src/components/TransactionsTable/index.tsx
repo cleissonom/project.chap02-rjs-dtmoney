@@ -1,13 +1,9 @@
-import { useEffect } from 'react';
-import { api } from '../../services/api';
+import { useContext } from 'react';
+import { TransactionsContext } from '../../TransactionsContext';
 import { TransactionsTableStyle } from './styles';
 
 export function TransactionsTable (){
-   useEffect(()=>{
-      api.get('http://localhost:3000/api/transactions')
-         .then(response => console.log(response.data))
-         .catch(error => console.error(error))
-   }, [])
+   const {transactions} = useContext(TransactionsContext)
 
    return (
       <TransactionsTableStyle>
@@ -22,18 +18,19 @@ export function TransactionsTable (){
             </thead>
 
             <tbody>
-               <tr>
-                  <td>WebSite Development</td>
-                  <td className='highlight-income'>$10,000</td>
-                  <td>Job</td>
-                  <td>12/21/2021</td>
-               </tr>
-               <tr>
-                  <td>Rent</td>
-                  <td className='highlight-outcome'>- $5,000</td>
-                  <td>Bil</td>
-                  <td>12/21/2021</td>
-               </tr>
+               {transactions.map(transaction => {
+                  const formatedValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(transaction.value)
+                  const formatedDate = new Intl.DateTimeFormat('en-US').format(new Date(transaction.createdAt))
+
+                  return (
+                     <tr key={transaction.id}>
+                        <td>{transaction.title}</td>
+                        <td className={`highlight-${transaction.type}`}>{formatedValue}</td>
+                        <td>{transaction.category}</td>
+                        <td>{formatedDate}</td>
+                     </tr>                     
+                  );
+               })}
             </tbody>
          </table>
       </TransactionsTableStyle>

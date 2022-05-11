@@ -1,9 +1,15 @@
+import { useContext } from 'react';
 import incomesSVG from '../../assets/incomes.svg';
 import outcomesSVG from '../../assets/outcomes.svg';
 import totalSVG from '../../assets/total.svg';
+import { TransactionsContext } from '../../TransactionsContext';
 import { SummaryStyle } from "./styles";
 
 export function Summary (){
+   const {transactions} = useContext(TransactionsContext)
+
+   console.log(transactions)
+
    return (
       <SummaryStyle>
          <div>
@@ -18,7 +24,7 @@ export function Summary (){
                <p>Outcomes</p>
                <img src={outcomesSVG} alt="Outcomes Icon" />
             </header>
-            <strong className='highlight-outcome'>- $5,000.00</strong>
+            <strong className='highlight-outcome'>$5,000.00</strong>
          </div>
          <div className='highlight-background'>
             <header>

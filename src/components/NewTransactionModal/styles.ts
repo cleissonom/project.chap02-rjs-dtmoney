@@ -48,6 +48,7 @@ export const TransactionTypeStyle = styled.div`
 
 interface RadioBoxStyleProps {
    readonly wasSelected: boolean;
+   readonly activeColor: string;
 }
 
 export const RadioBoxStyle = styled.button<RadioBoxStyleProps>`
@@ -58,7 +59,11 @@ export const RadioBoxStyle = styled.button<RadioBoxStyleProps>`
       align-items: center;
       justify-content: center;
 
-      background-color: ${(props)=> props.wasSelected ? '#eee' : 'transparent'};
+      background: ${(props)=> (
+         props.wasSelected 
+         ? props.activeColor
+         : 'transparent'
+      )};
       border-radius: 0.25rem;
       border: 1px solid #d7d7d7;
 
